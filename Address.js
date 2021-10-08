@@ -30,11 +30,13 @@ class Address {
         else throw 'Zip is Incorrect';
     }
 
-    constructor(city, state, zip) {
+    createAddress(city, state, zip) {
 
-        this.city = city;
-        this.state = state;
-        this.zip = zip;
+        var address = new Address();
+        address.city = city;
+        address.state = state;
+        address.zip = zip;
+        return address
     }
 }
 
