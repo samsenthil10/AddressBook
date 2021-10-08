@@ -68,20 +68,28 @@ class Contact {
 try {
 
     var addressBook = new AddressBook();
-    var addressBookArray = new Array();
     let contact1 = new Contact('Test1', 'User1', 'Test City1', 'Test State1', 560001, '1111111111', 'test1@gmail.com');
     let contact2 = new Contact('Test2', 'User2', 'Test City2', 'Test State2', 660002, '2222222222', 'test2@gmail.com');
     let contact3 = new Contact('Test3', 'User3', 'Test City3', 'Test State2', 760002, '3333333333', 'test3@gmail.com');
-    addressBookArray.push(contact1);
-    addressBookArray.push(contact2);
-    addressBookArray.push(contact3);
-    addressBook.contacts = addressBookArray;
-    addressBook.contacts.forEach(element => {
-        console.log("" + element)
-    });
+    addressBook.contacts.push(contact1)
+    addressBook.contacts.push(contact2)
+    addressBook.contacts.push(contact3)
+    addressBook.printAddressBook(addressBook);
+
+    let nameOfContactToBeEdited = "Test3";
+    let contactDetailsToBeEdited = new Contact('Test3', 'User3', 'Test City3', 'Test State3', 760003, '3333333333', 'test3@gmail.com');
+    const index =addressBook.contacts.map(element => element.firstName).indexOf(nameOfContactToBeEdited);
+    if(index == -1)
+        addressBook.contacts.push(contactDetailsToBeEdited)
+    else
+        addressBook.contacts.splice(index,1,contactDetailsToBeEdited);
+    
+        addressBook.printAddressBook(addressBook);
 }
+
 catch (exception) {
     console.log(exception)
 }
+
 
 module.exports = Contact;
