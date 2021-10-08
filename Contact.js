@@ -107,6 +107,26 @@ class Contact {
 
         return addressBook.contacts.length;
     }
+
+    searchContactByCity(addressBook, cityToSearch, personToSearch) {
+
+        if (addressBook.contacts.length < 1)
+            console.log("Contact Not Found!")
+        else
+            addressBook.contacts.filter(contact => contact.address.city == cityToSearch)
+                .filter(contact => contact.firstName == personToSearch)
+                .forEach(contact => console.log("" + contact));
+    }
+
+    searchContactByState(addressBook, stateToSearch, personToSearch) {
+
+        if (addressBook.contacts.length < 1)
+            console.log("Contact Not Found!")
+        else
+            addressBook.contacts.filter(contact => contact.address.state == stateToSearch)
+                .filter(contact => contact.firstName == personToSearch)
+                .forEach(contact => console.log("" + contact));
+    }
 }
 
 try {
@@ -118,6 +138,7 @@ try {
     testEditingOfContact();
     testDeletionOfContact();
     testGetTotalCountOfContacts();
+    testSearchContactByCityOrState();
 }
 
 catch (exception) {
@@ -154,4 +175,16 @@ function testDeletionOfContact() {
 function testGetTotalCountOfContacts() {
     var totalContacts = contact.getTotalCount(addressBook);
     console.log("Total contacts: ", totalContacts);
+}
+
+function testSearchContactByCityOrState() {
+
+    console.log("")
+    let cityToSearch = 'Test City3';
+    let personToSearch = 'Test3';
+    contact.searchContactByCity(addressBook, cityToSearch, personToSearch);
+
+    let stateToSearch = 'Test State1';
+    personToSearch = 'Test1';
+    contact.searchContactByState(addressBook, stateToSearch, personToSearch);
 }
