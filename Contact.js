@@ -87,11 +87,16 @@ try {
     addressBook.printAddressBook(addressBook);
 
     let nameOfContactToBeDeleted = "Test2";
-    
+
     index = addressBook.contacts.map(element => element.firstName).indexOf(nameOfContactToBeDeleted);
-    if(index != -1)
-        addressBook.contacts.splice(index,1);
+    if (index != -1)
+        addressBook.contacts.splice(index, 1);
     addressBook.printAddressBook(addressBook);
+
+    let totalContacts = addressBook.contacts.reduce((totalContacts, contact) => {
+        return totalContacts += 1;
+    }, 0);
+    console.log("Total contacts: ", totalContacts)
 }
 
 catch (exception) {
