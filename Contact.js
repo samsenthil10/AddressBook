@@ -78,13 +78,20 @@ try {
 
     let nameOfContactToBeEdited = "Test3";
     let contactDetailsToBeEdited = new Contact('Test3', 'User3', 'Test City3', 'Test State3', 760003, '3333333333', 'test3@gmail.com');
-    const index =addressBook.contacts.map(element => element.firstName).indexOf(nameOfContactToBeEdited);
-    if(index == -1)
+    var index = addressBook.contacts.map(element => element.firstName).indexOf(nameOfContactToBeEdited);
+    if (index == -1)
         addressBook.contacts.push(contactDetailsToBeEdited)
     else
-        addressBook.contacts.splice(index,1,contactDetailsToBeEdited);
+        addressBook.contacts.splice(index, 1, contactDetailsToBeEdited);
+
+    addressBook.printAddressBook(addressBook);
+
+    let nameOfContactToBeDeleted = "Test2";
     
-        addressBook.printAddressBook(addressBook);
+    index = addressBook.contacts.map(element => element.firstName).indexOf(nameOfContactToBeDeleted);
+    if(index != -1)
+        addressBook.contacts.splice(index,1);
+    addressBook.printAddressBook(addressBook);
 }
 
 catch (exception) {
