@@ -1,6 +1,6 @@
 class AddressBook {
 
-    contacts;
+    contacts = new Array();
 
     get contacts() {
         return this.contacts;
@@ -8,6 +8,13 @@ class AddressBook {
 
     set contacts(value) {
         this.contacts = value;
+    }
+
+    printAddressBook(addressBook) {
+        console.log("\n")
+        addressBook.contacts.forEach(element => {
+            console.log("" + element)
+        }); 
     }
 }
 module.exports = AddressBook;
