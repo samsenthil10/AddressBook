@@ -9,17 +9,10 @@ class Contact {
     phoneNumber;
     email;
 
-    constructor(...params) {
-        this.firstName = params[0];
-        this.lastName = params[1];
-        this.address = new Address(params[2], params[3], params[4]);
-        this.phoneNumber = params[5];
-        this.email = params[6];
-    }
-
     get firstName() {
         return this._firstName;
     }
+
     set firstName(firstName) {
         let nameRegex = RegExp('^[A-Z]{1}[a-z]{2,}$')
         if (nameRegex.test(firstName))
@@ -63,45 +56,102 @@ class Contact {
             + ", Zip= " + this.address.zip + ", Phone Number= " + this.phoneNumber
             + ", Email= " + this.email;
     }
+
+    createContact(firstName, lastName, city, state, zip, phoneNumber, email) {
+
+        var contact = new Contact();
+        var address = new Address();
+        contact.firstName = firstName;
+        contact.address = address.createAddress(city, state, zip);
+        contact.phoneNumber = phoneNumber;
+        contact.element = email;
+        return contact
+    }
+
+    addContactToAddressBook(addressBook, contactToBeAdded) {
+        if (addressBook.contacts.some((contact) => {
+            return contact.firstName == contactToBeAdded.firstName
+        })) {
+            console.log("Contact Already Exists!");
+        }
+        else {
+            addressBook.contacts.push(contactToBeAdded);
+            console.log("Contact Added");
+        }
+        return addressBook;
+    }
+
+    editContactInAddressBook(addressBook, nameOfContactToBeEdited, contactDetailsToBeEdited) {
+        var index = addressBook.contacts.map(element => element.firstName).indexOf(nameOfContactToBeEdited);
+        if (index == -1) {
+            console.log("Contact Not Found!")
+        }
+        else {
+            addressBook.contacts.splice(index, 1, contactDetailsToBeEdited);
+            console.log("Contact Edited");
+        }
+    }
+
+    deleteContactFromAddressBook(addressBook, nameOfContactToBeDeleted) {
+        var index = addressBook.contacts.map(element => element.firstName).indexOf(nameOfContactToBeDeleted);
+        if (index == -1) {
+            console.log("Contact Not Found!")
+        }
+        else {
+            addressBook.contacts.splice(index, 1);
+            console.log("Contact Deleted");
+        }
+    }
+
+    getTotalCount(addressBook) {
+
+        return addressBook.contacts.length;
+    }
 }
 
 try {
 
+    var contact = new Contact();
     var addressBook = new AddressBook();
-    let contact1 = new Contact('Test1', 'User1', 'Test City1', 'Test State1', 560001, '1111111111', 'test1@gmail.com');
-    let contact2 = new Contact('Test2', 'User2', 'Test City2', 'Test State2', 660002, '2222222222', 'test2@gmail.com');
-    let contact3 = new Contact('Test3', 'User3', 'Test City3', 'Test State2', 760002, '3333333333', 'test3@gmail.com');
-    addressBook.contacts.push(contact1)
-    addressBook.contacts.push(contact2)
-    addressBook.contacts.push(contact3)
-    addressBook.printAddressBook(addressBook);
 
-    let nameOfContactToBeEdited = "Test3";
-    let contactDetailsToBeEdited = new Contact('Test3', 'User3', 'Test City3', 'Test State3', 760003, '3333333333', 'test3@gmail.com');
-    var index = addressBook.contacts.map(element => element.firstName).indexOf(nameOfContactToBeEdited);
-    if (index == -1)
-        addressBook.contacts.push(contactDetailsToBeEdited)
-    else
-        addressBook.contacts.splice(index, 1, contactDetailsToBeEdited);
-
-    addressBook.printAddressBook(addressBook);
-
-    let nameOfContactToBeDeleted = "Test2";
-
-    index = addressBook.contacts.map(element => element.firstName).indexOf(nameOfContactToBeDeleted);
-    if (index != -1)
-        addressBook.contacts.splice(index, 1);
-    addressBook.printAddressBook(addressBook);
-
-    let totalContacts = addressBook.contacts.reduce((totalContacts, contact) => {
-        return totalContacts += 1;
-    }, 0);
-    console.log("Total contacts: ", totalContacts)
+    testCreationOfContacts();
+    testEditingOfContact();
+    testDeletionOfContact();
+    testGetTotalCountOfContacts();
 }
 
 catch (exception) {
     console.log(exception)
 }
 
-
 module.exports = Contact;
+
+function testCreationOfContacts() {
+
+
+    let contact1 = contact.createContact('Test1', 'User1', 'Test City1', 'Test State1', 560001, '1111111111', 'test1@gmail.com');
+    let contact2 = contact.createContact('Test2', 'User2', 'Test City2', 'Test State2', 660002, '2222222222', 'test2@gmail.com');
+    let contact3 = contact.createContact('Test3', 'User3', 'Test City3', 'Test State2', 760002, '3333333333', 'test3@gmail.com');
+    addressBook = contact.addContactToAddressBook(addressBook, contact1);
+    addressBook = contact.addContactToAddressBook(addressBook, contact2);
+    addressBook = contact.addContactToAddressBook(addressBook, contact3);
+    addressBook.printAddressBook(addressBook);
+}
+
+function testEditingOfContact() {
+    let nameOfContactToBeEdited = "Test3";
+    let contactDetailsToBeEdited = contact.createContact('Test3', 'User3', 'Test City3', 'Test State3', 760003, '3333333333', 'test3@gmail.com');
+    contact.editContactInAddressBook(addressBook, nameOfContactToBeEdited, contactDetailsToBeEdited);
+    addressBook.printAddressBook(addressBook);
+}
+
+function testDeletionOfContact() {
+    let nameOfContactToBeDeleted = "Test2";
+    contact.deleteContactFromAddressBook(addressBook, nameOfContactToBeDeleted);
+    addressBook.printAddressBook(addressBook);
+}
+
+function testGetTotalCountOfContacts() {
+    var totalContacts = contact.getTotalCount(addressBook);
+    console.log("Total contacts: ", totalContacts);
+}
