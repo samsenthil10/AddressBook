@@ -62,9 +62,10 @@ class Contact {
         var contact = new Contact();
         var address = new Address();
         contact.firstName = firstName;
+        contact.lastName = lastName
         contact.address = address.createAddress(city, state, zip);
         contact.phoneNumber = phoneNumber;
-        contact.element = email;
+        contact.email = email;
         return contact
     }
 
@@ -180,7 +181,8 @@ try {
     testGetTotalCountOfContacts();
     testSearchContactByCityOrState();
     testShowContactsByCityOrState();
-    testShowCountOfContactsByCityOrState()
+    testShowCountOfContactsByCityOrState();
+    testSortContactsByName();
 }
 
 catch (exception) {
@@ -251,4 +253,12 @@ function testShowCountOfContactsByCityOrState() {
     let stateToSearch = 'Test State1';
     count = contact.showCountOfContactsByState(addressBook, stateToSearch);
     console.log("Total Contacts in State: "+ stateToSearch + " : " + count)
+}
+
+function testSortContactsByName() {
+
+    console.log("")
+    addressBook.contacts.sort((contact1, contact2) => {
+        return contact1.firstName.localeCompare(contact2.firstName)
+    }).forEach(contact => console.log(""+contact))
 }
