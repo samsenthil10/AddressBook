@@ -168,6 +168,30 @@ class Contact {
                 .forEach(contact => count++);
         return count
     }
+
+    sortContactsByName(addressBook) {
+        addressBook.contacts.sort((contact1, contact2) => {
+            return contact1.firstName.localeCompare(contact2.firstName);
+        }).forEach(contact => console.log("" + contact));
+    }
+
+    sortContactsByCity(addressBook) {
+        addressBook.contacts.sort((contact1, contact2) => {
+            return contact1.address.city.localeCompare(contact2.address.city);
+        }).forEach(contact => console.log("" + contact));
+    }
+
+    sortContactsByState(addressBook) {
+        addressBook.contacts.sort((contact1, contact2) => {
+            return contact1.address.state.localeCompare(contact2.address.state);
+        }).forEach(contact => console.log("" + contact));
+    }
+
+    sortContactsByZip(addressBook) {
+        addressBook.contacts.sort((contact1, contact2) => {
+            return contact1.address.zip.toString().localeCompare(contact2.address.zip.toString());
+        }).forEach(contact => console.log("" + contact));
+    }
 }
 
 try {
@@ -183,6 +207,7 @@ try {
     testShowContactsByCityOrState();
     testShowCountOfContactsByCityOrState();
     testSortContactsByName();
+    testSortContactsByCityStateZip();
 }
 
 catch (exception) {
@@ -248,17 +273,27 @@ function testShowCountOfContactsByCityOrState() {
     console.log("\nBy City")
     let cityToSearch = 'Test City3';
     var count = contact.showCountOfContactsByCity(addressBook, cityToSearch);
-    console.log("Total Contacts in City: "+ cityToSearch + " : " + count)
+    console.log("Total Contacts in City: " + cityToSearch + " : " + count)
     console.log("\nBy State")
     let stateToSearch = 'Test State1';
     count = contact.showCountOfContactsByState(addressBook, stateToSearch);
-    console.log("Total Contacts in State: "+ stateToSearch + " : " + count)
+    console.log("Total Contacts in State: " + stateToSearch + " : " + count)
 }
 
 function testSortContactsByName() {
 
-    console.log("")
-    addressBook.contacts.sort((contact1, contact2) => {
-        return contact1.firstName.localeCompare(contact2.firstName)
-    }).forEach(contact => console.log(""+contact))
+    console.log("\nSorted By Name: ")
+    contact.sortContactsByName(addressBook);
+}
+
+
+
+function testSortContactsByCityStateZip() {
+
+    console.log("\nSorted By City:")
+    contact.sortContactsByCity(addressBook);
+    console.log("\nSorted By State:")
+    contact.sortContactsByState(addressBook);
+    console.log("\nSorted By Zip Code:")
+    contact.sortContactsByZip(addressBook);
 }
