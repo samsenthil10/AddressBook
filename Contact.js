@@ -145,6 +145,28 @@ class Contact {
             addressBook.contacts.filter(contact => contact.address.state == stateToSearch)
                 .forEach(contact => console.log("" + contact));
     }
+
+    showCountOfContactsByCity(addressBook, cityToSearch) {
+
+        var count = 0;
+        if (addressBook.contacts.length < 1)
+            console.log("Contact Not Found!")
+        else
+            addressBook.contacts.filter(contact => contact.address.city == cityToSearch)
+                .forEach(contact => count++);
+        return count;
+    }
+
+    showCountOfContactsByState(addressBook, stateToSearch) {
+
+        var count = 0;
+        if (addressBook.contacts.length < 1)
+            console.log("Contact Not Found!")
+        else
+            addressBook.contacts.filter(contact => contact.address.state == stateToSearch)
+                .forEach(contact => count++);
+        return count
+    }
 }
 
 try {
@@ -158,6 +180,7 @@ try {
     testGetTotalCountOfContacts();
     testSearchContactByCityOrState();
     testShowContactsByCityOrState();
+    testShowCountOfContactsByCityOrState()
 }
 
 catch (exception) {
@@ -216,4 +239,16 @@ function testShowContactsByCityOrState() {
     console.log("\nBy State")
     let stateToSearch = 'Test State1';
     contact.showContactsByState(addressBook, stateToSearch);
+}
+
+function testShowCountOfContactsByCityOrState() {
+
+    console.log("\nBy City")
+    let cityToSearch = 'Test City3';
+    var count = contact.showCountOfContactsByCity(addressBook, cityToSearch);
+    console.log("Total Contacts in City: "+ cityToSearch + " : " + count)
+    console.log("\nBy State")
+    let stateToSearch = 'Test State1';
+    count = contact.showCountOfContactsByState(addressBook, stateToSearch);
+    console.log("Total Contacts in State: "+ stateToSearch + " : " + count)
 }
